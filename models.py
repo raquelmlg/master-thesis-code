@@ -31,8 +31,9 @@ def simulate_colonies(R_0, I, r, N, model, l=None, showPlots=False):
     if showPlots:
         density = cf.calculate_percentage_covered(colonies, l)
         densities.append(density)
-    concentration = cf.calculate_bacterial_concentration(colonies)
-    concentrations.append(concentration)
+        concentration = cf.calculate_bacterial_concentration(colonies)
+        concentrations.append(concentration)
+
     for k in range(N):
         # old colonies have grown
         for colony in colonies:
@@ -52,19 +53,20 @@ def simulate_colonies(R_0, I, r, N, model, l=None, showPlots=False):
                 colonies.append(new_colony)
 
         # calculate new density taking into account the growth and the new colonies
-        concentration = cf.calculate_bacterial_concentration(colonies)
-        concentrations.append(concentration)
 
         if showPlots:
+            concentration = cf.calculate_bacterial_concentration(colonies)
+            concentrations.append(concentration)
             density = cf.calculate_percentage_covered(colonies, l)
             densities.append(density)
             print(f"Step {k + 1}: Density = {density:.4f},  Concentration = {concentration:.4f}")
             cf.plot_colonies(colonies, l)
+
     if showPlots:
         cf.plot_array(concentrations, 'Concentration')
         cf.plot_array(densities, 'Density')
         cf.plot_growth_colony(N, R_0, I, r)
-
+    return colonies, cf.calculate_bacterial_concentration(colonies), cf.calculate_percentage_covered(colonies, l)
 #from datetime import datetime
 #time_1 = datetime.now()
 #area = simulate_colonies(1, 20, 0.4, 20, 'model_2', 4 * 20 * 2, showPlots=False)
