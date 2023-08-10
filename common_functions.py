@@ -94,6 +94,17 @@ def calculate_nutrient_availability(colonies, l, grid_size=0.2):
 def calculate_new_radius(R_0, I, r, t):
     return I * R_0 * np.exp(r * t) / (I + R_0 * np.exp(r * t - 1))
 
+# Radius increases slower due to Antibiotics
+# TODO: define the parameters meanings for A_0, A_1, theta and m (next function)
+def rayleigh_distribution(t, A_0=1.65, A_1=32):
+    return A_0*t*np.exp(-t**2/A_1)
+
+#theta is the empirical constant provided the certain density of alive population
+# m is the maximum value of antibiotic concentration i.e. the maximum of the rayleigh distribution
+# for the default A_0 and A_1 the maximum is approximately 4
+def calculate_new_radius_with_antibiotics(t,colony,theta=0.2, m=4):
+    return colony['radius']*(1-theta*rayleigh_distribution(t)**2/(rayleigh_distribution(t)**2 + m))
+
 
 ## This function could have been use in another version of the model where we skip the already covered points
 # but for some rwason is not faster
@@ -167,6 +178,17 @@ def plot_covered_points(covered_points, l, grid_size=10):
     plt.xlabel('X')
     plt.ylabel('Y')
     plt.title('Covered Points')
+    plt.legend()
+    plt.grid(True)
+    plt.show()
+
+def plot_rayleigh_distribution():
+    t_values = np.linspace(0, 100, 500)
+    y_values = rayleigh_distribution(t_values)
+    plt.plot(t_values, y_values, label='Rayleigh Distribution')
+    plt.xlabel('t')
+    plt.ylabel('Probability Density')
+    plt.title('Rayleigh Distribution')
     plt.legend()
     plt.grid(True)
     plt.show()

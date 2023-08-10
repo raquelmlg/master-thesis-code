@@ -10,9 +10,9 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 
-model_1 = pd.read_csv("Dataframes/first_try/mmodel1-1-5m.csv")
-model_2 = pd.read_csv("Dataframes/first_try/mmodel2-1_1h-19-29.767445.csv")
-model_3 = pd.read_csv("Dataframes/first_try/mmodel3-1-1h-18m.csv")
+model_1 = pd.read_csv("dataframes/2/model1.csv")
+model_2 = pd.read_csv("dataframes/2/model2.csv")
+model_3 = pd.read_csv("dataframes/2/model3.csv")
 
 
 # Calculate mean and standard deviation for each model
