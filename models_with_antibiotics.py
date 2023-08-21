@@ -73,6 +73,8 @@ def simulate_colonies(R_0, I, r, N, model, antibiotic_step=10, l=None, showPlots
         p = 0.1
         # Second and third model: In every step, we take into account the availability of nutrients to
         # calculate the probability of generating a new colony
+
+        ## TODO: in the antibiotics steps no new colonies are generated!
         if model == 'model_2' or model == 'model_3':
             p = p * cf.calculate_nutrient_availability(colonies, l)
 
@@ -97,8 +99,8 @@ def simulate_colonies(R_0, I, r, N, model, antibiotic_step=10, l=None, showPlots
         cf.plot_growth_colony(N, R_0, I, r)
     return colonies, cf.calculate_bacterial_concentration(colonies), cf.calculate_percentage_covered(colonies, l)
 
-# from datetime import datetime
-# time_1 = datetime.now()
-# area = simulate_colonies(1, 20, 0.4, 20, 'model_1',10, 4 * 20 * 2, showPlots=True)
-# time_2 = datetime.now()
-# print(time_2-time_1)
+from datetime import datetime
+time_1 = datetime.now()
+area = simulate_colonies(1, 20, 0.4, 20, 'model_1',10, 4 * 20 * 2, showPlots=True)
+time_2 = datetime.now()
+print(time_2-time_1)

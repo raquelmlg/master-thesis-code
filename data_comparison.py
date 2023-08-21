@@ -10,11 +10,13 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 
-model_1 = pd.read_csv("dataframes/2/model1.csv")
-model_2 = pd.read_csv("dataframes/2/model2.csv")
-model_3 = pd.read_csv("dataframes/2/model3.csv")
+def selectVersion(version):
+    model_1 = pd.read_csv("ordered_dataframes/" + str(version) + "/model1.csv")
+    model_2 = pd.read_csv("ordered_dataframes/"+ str(version)+ "/model2.csv")
+    model_3 = pd.read_csv("ordered_dataframes/"+ str(version)+ "/model3.csv")
+    return model_1, model_2, model_3
 
-
+model_1, model_2, model_3 = selectVersion("20-4")
 # Calculate mean and standard deviation for each model
 mean_colonies = [model_1['number_colonies'].mean(), model_2['number_colonies'].mean(), model_3['number_colonies'].mean()]
 std_colonies = [model_1['number_colonies'].std(), model_2['number_colonies'].std(), model_3['number_colonies'].std()]
