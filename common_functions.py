@@ -26,7 +26,7 @@ def calculate_area(colony):
     return math.pi * colony['radius'] ** 2
 
 def create_new_colony(I,l,R_0):
-    h=I * math.e
+    h=0
     center_x = random.uniform(h, l - h)
     center_y = random.uniform(h, l - h)
     return {'center_x': center_x, 'center_y': center_y, 'radius': R_0, 'age': 0}
@@ -92,7 +92,7 @@ def calculate_nutrient_availability(colonies, l, grid_size=0.2):
 
 # Radius increases according to the Logistic Growth with Carrying Capacity I and Growth Rate r
 def calculate_new_radius(R_0, I, r, t):
-    return I * R_0 * np.exp(r * t) / (I + R_0 * np.exp(r * t - 1))
+    return I * R_0 * np.exp(r * t) / (I + R_0 * np.exp(r * t)-1)
 
 # Radius increases slower due to Antibiotics
 # TODO: define the parameters meanings for A_0, A_1, theta and m (next function)
@@ -124,7 +124,8 @@ def calculate_free_points(colonies, grid_size, free_points):
 """FUNCTIONS TO PLOT THE MODELS"""
 
 
-def plot_colonies(colonies, l):
+def plot_colonies(colonies, l, t):
+    print("plotting" + str(t))
     fig, ax = plt.subplots()
     for colony in colonies:
         circle = plt.Circle((colony['center_x'], colony['center_y']), colony['radius'], fill=False, edgecolor='b')
@@ -134,7 +135,7 @@ def plot_colonies(colonies, l):
     ax.set_aspect('equal', adjustable='box')
     plt.xlabel('X')
     plt.ylabel('Y')
-    plt.title('Bacteria Colonies')
+    plt.title('Bacteria Colonies at t ='+ str(t))
     plt.show()
 
 
