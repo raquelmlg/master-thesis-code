@@ -5,7 +5,6 @@ Created on Tue Jul 11 12:50:20 2023
 @author: gilor
 """
 import pandas as pd
-import math
 import models as models
 from datetime import datetime
 from concurrent.futures import ThreadPoolExecutor
