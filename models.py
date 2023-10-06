@@ -5,14 +5,13 @@ Created on Mon Jun 26 13:32:17 2023
 @author: gilor
 """
 import random
-import math
 import common_functions as cf
 
 
-def simulate_colonies(R_0, I, r, N, model, l=None, showPlots=False):
+def simulate_colonies(R_0, I, r, hour_count, model, l=None, showPlots=False):
     # Default value of length if not specified
     if l is None:
-        l = 4 * math.e * I
+        l = 5*I
 
     colonies = []
     concentrations = []
@@ -29,13 +28,13 @@ def simulate_colonies(R_0, I, r, N, model, l=None, showPlots=False):
 
     # calculate initial concentration / density
     if showPlots:
-        #density = cf.calculate_percentage_covered(colonies, l)
-        #densities.append(density)
-        #concentration = cf.calculate_bacterial_concentration(colonies)
-        #concentrations.append(concentration)
+        density = cf.calculate_percentage_covered(colonies, l)
+        densities.append(density)
+        concentration = cf.calculate_bacterial_concentration(colonies)
+        concentrations.append(concentration)
         cf.plot_colonies(colonies,l,0)
 
-    for k in range(N):
+    for k in range(hour_count):
         # old colonies have grown
         for colony in colonies:
             colony['age'] = colony['age'] + 1
@@ -45,11 +44,12 @@ def simulate_colonies(R_0, I, r, N, model, l=None, showPlots=False):
         p = 0.1
         # Second and third model: In every step, we take into account the availability of nutrients to 
         # calculate the probability of generating a new colony
-        if model == 'model_2' or model == 'model_3':
+        if model == 'model_2' or model == 'model_4':
             p = p * cf.calculate_nutrient_availability(colonies, l)
 
         if random.random() <= p:
-            new_colony = cf.generate_colony(l, R_0, I, colonies, checkSpaceAvailable=(model == 'model_3'))
+            new_colony = cf.generate_colony(l, R_0, I, colonies,
+                                            checkSpaceAvailable=(model == 'model_3' or model == 'model_4'))
             if new_colony is not None:
                 colonies.append(new_colony)
 
@@ -57,21 +57,21 @@ def simulate_colonies(R_0, I, r, N, model, l=None, showPlots=False):
 
         if showPlots:
             cf.plot_colonies(colonies, l,k+1)
-            #concentration = cf.calculate_bacterial_concentration(colonies)
-            #concentrations.append(concentration)
-            # density = cf.calculate_percentage_covered(colonies, l)
-            #  densities.append(density)
-            #   print(f"Step {k + 1}: Density = {density:.4f},  Concentration = {concentration:.4f}")
+            concentration = cf.calculate_bacterial_concentration(colonies)
+            concentrations.append(concentration)
+            density = cf.calculate_percentage_covered(colonies, l)
+            densities.append(density)
+            print(f"Step {k + 1}: Density = {density:.4f},  Concentration = {concentration:.4f}")
 
     if showPlots:
-        # cf.plot_array(concentrations, 'Concentration')
-        #cf.plot_array(densities, 'Density')
-        cf.plot_growth_colony(N, R_0, I, r)
+         cf.plot_array(concentrations, 'Concentration')
+         cf.plot_array(densities, 'Density')
+         cf.plot_growth_colony(hour_count, R_0, I, r)
     return colonies, cf.calculate_bacterial_concentration(colonies), cf.calculate_percentage_covered(colonies, l)
 
 
 # from datetime import datetime
 # time_1 = datetime.now()
-area = simulate_colonies(1, 20, 0.4, 20, 'model_1', 5 * 20, showPlots=True)
+# area = simulate_colonies(R_0=1, I=20, r=0.4, hour_count=50, model='model_4', l=5 * 20, showPlots=True)
 # time_2 = datetime.now()
 # print(time_2-time_1)
