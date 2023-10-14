@@ -46,7 +46,7 @@ def simulate_colonies(R_0, I, r, hour_count, model, antibiotic_step=10, l=None, 
 
         # Basic model: In every step the probability of generating one colony is p
         p = 0.1
-        # Second and third model: In every step, we take into account the availability of nutrients to 
+        # Second and fourth model: In every step, we take into account the availability of nutrients to
         # calculate the probability of generating a new colony
         if model == 'model_2' or model == 'model_4':
             p = p * cf.calculate_nutrient_availability(colonies, l)
