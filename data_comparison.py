@@ -18,7 +18,7 @@ def selectVersion(version):
     model_4= pd.read_csv("dataframes/"+ str(version)+ "/model4.csv")
     return model_1, model_2, model_3, model_4
 
-model_1, model_2, model_3, model_4 = selectVersion("1")
+model_1, model_2, model_3, model_4 = selectVersion("9")
 
 
 # Calculate mean and standard deviation for each model
@@ -39,30 +39,30 @@ std_time = [model_1['running_time'].std(), model_2['running_time'].std(), model_
 models = ['Model 1', 'Model 2', 'Model 3', 'Model 4']
 x_pos = np.arange(len(models))
 plt.bar(x_pos, mean_colonies, yerr=std_colonies, align='center', alpha=0.7, capsize=3, width=0.7)
-plt.xticks(x_pos, models)
-plt.ylabel('Number of Colonies')
-plt.title('Comparison of Final Number of Colonies')
+plt.xticks(x_pos, models, fontsize=14)
+plt.ylabel('Number of Colonies', fontsize=14)
+plt.title('Comparison of Final Number of Colonies', fontsize=16)
 plt.show()
 
 # Bar plot for comparing concentration
 plt.bar(x_pos, mean_concentration, yerr=std_concentration, align='center', alpha=0.7, capsize=3, width=0.7)
-plt.xticks(x_pos, models)
-plt.ylabel('Concentration')
-plt.title('Comparison of Final Concentration')
+plt.xticks(x_pos, models, fontsize=14)
+plt.ylabel('Concentration', fontsize=14)
+plt.title('Comparison of Final Concentration', fontsize=16)
 plt.show()
 
 # Bar plot for comparing density
 plt.bar(x_pos, mean_density, yerr=std_density, align='center', alpha=0.7, capsize=3, width=0.7)
-plt.xticks(x_pos, models)
-plt.ylabel('Density')
-plt.title('Comparison of Final Density')
+plt.xticks(x_pos, models, fontsize=14)
+plt.ylabel('Density', fontsize=14)
+plt.title('Comparison of Final Density', fontsize=16)
 plt.show()
 
 # Bar plot for comparing running_time
 plt.bar(x_pos, mean_time, yerr=std_time, align='center', alpha=0.7, capsize=3, width=0.7)
-plt.xticks(x_pos, models)
-plt.ylabel('Runnning Time (Seconds)')
-plt.title('Comparison of Running Time in Seconds')
+plt.xticks(x_pos, models, fontsize=14)
+plt.ylabel('Runnning Time (Seconds)', fontsize=14)
+plt.title('Comparison of Running Time in Seconds', fontsize=16)
 plt.show()
 
 
@@ -71,9 +71,9 @@ std_time = [model_1['running_time'].std(), model_3['running_time'].std()]
 
 # Bar plot for comparing running_time
 plt.bar(np.arange(2), mean_time, yerr=std_time, align='center', alpha=0.7, capsize=3, width=0.7)
-plt.xticks(np.arange(2), ['Model 1', 'Model_3'])
-plt.ylabel('Runnning Time (Seconds)')
-plt.title('Comparison of Running Time in Seconds')
+plt.xticks(np.arange(2), ['Model 1', 'Model_3'], fontsize=14)
+plt.ylabel('Runnning Time (Seconds)', fontsize=14)
+plt.title('Comparison of Running Time in Seconds', fontsize=16)
 plt.show()
 
 
@@ -96,25 +96,3 @@ def perform_t_tests(models, column_names):
                 print(f"Model {i + 1} vs Model {j + 1} - p-value:", p_value)
                 
 perform_t_tests([model_1,model_2,model_3,model_4], ['density','concentrations','running_time','number_colonies'])
-
-
-# # Create subplots for each model
-# fig, ax = plt.subplots(figsize=(10, 6))
-#
-# # Define the number of bins for the histograms
-# num_bins = 10  # You can adjust this as needed
-#
-# # Create histograms for each model and plot them as grouped bars
-# for i, data in enumerate([model_1['number_colonies'],model_2['number_colonies'],
-#                           model_3['number_colonies'],model_4['number_colonies']]):
-#     ax.hist(data, bins=num_bins, alpha=0.5, label=models[i])
-#
-# # Customize the plot
-# plt.xlabel('Variable Values')
-# plt.ylabel('Frequency')
-# plt.title('Distribution of Variable in Three Models')
-# plt.legend()
-# plt.grid(True)
-#
-# # Show the plot
-# plt.show()
