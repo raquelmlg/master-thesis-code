@@ -10,7 +10,7 @@ import plot_functions as pf
 
 
 def simulate_colonies(R_0, I, r, hour_count, model, antibiotic_step=10, l=None, showPlots=False):
-    random.seed(1411)
+    # random.seed(1411)
     # Default value of length if not specified
     if l is None:
         l = 5*I
@@ -65,7 +65,7 @@ def simulate_colonies(R_0, I, r, hour_count, model, antibiotic_step=10, l=None, 
             density = cf.calculate_percentage_covered(colonies, l)
             densities.append(density)
             sum_of_radiuses.append(cf.sum_of_radiuses(colonies))
-            print(f"Step with antibiotics{k + 1}: Density = {density:.4f},  Concentration = {concentration:.4f}")
+            print(f"Step without antibiotics{k + 1}: Density = {density:.4f},  Concentration = {concentration:.4f}")
 
     for k in range(hour_count-antibiotic_step):
         # old colonies have schrunk
@@ -83,7 +83,7 @@ def simulate_colonies(R_0, I, r, hour_count, model, antibiotic_step=10, l=None, 
             density = cf.calculate_percentage_covered(colonies, l)
             densities.append(density)
             sum_of_radiuses.append(cf.sum_of_radiuses(colonies))
-            print(f"Step without antibiotics {k + 1}: Density = {density:.4f},  Concentration = {concentration:.4f}")
+            print(f"Step with antibiotics {k + 1}: Density = {density:.4f},  Concentration = {concentration:.4f}")
 
 
     if showPlots:

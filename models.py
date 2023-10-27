@@ -10,7 +10,8 @@ import plot_functions as pf
 
 
 def simulate_colonies(R_0, I, r, hour_count, model, l=None, showPlots=False):
-    random.seed(1411)
+    # random.seed(1411)
+
     # Default value of length if not specified
     if l is None:
         l = 5*I

@@ -29,6 +29,23 @@ def plot_array(array, title):
     plt.title('Bacterial ' + title + ' Over Time', fontsize = 16)
     plt.show()
 
+def plot_array_with_conditions(array, title):
+    x = np.arange(len(array))  # Create an array of x-values for the plot
+
+    # Separate the array into two sub-arrays based on the condition
+    array_below =  np.ma.masked_where(array > 0.03, array)
+    array_above = np.ma.masked_where(array < 0.03, array)
+
+    # Plot the sub-arrays with different colors
+    plt.plot(x, array_below, 'r', label='Below 0.05')
+    plt.plot(x, array_above, 'g', label='Above 0.05')
+
+    plt.xlabel('Time in Hours', fontsize=14)
+    plt.ylabel(title, fontsize=14)
+    plt.title('Total Antibiotic Concentration Over Time', fontsize=16)
+    plt.legend()  # Add a legend to label the colors
+    plt.show()
+
 def plot_radius_growth(N, R_0, I, r):
     t = np.linspace(0, N, N, dtype=int)
     y = cf.calculate_new_radius(R_0, I, r, t)
@@ -43,7 +60,7 @@ def plot_rayleigh_distribution(A_0=1.65,A_1=32):
     y1_values = cf.rayleigh_distribution(t_values, A_0, A_1)
     plt.plot(t_values, y1_values, label='$A_0=$'+ str(A_0) +', $A_1=$' + str(A_1))
     plt.xlabel('t', fontsize = 14)
-    plt.ylabel('Probability Density', fontsize = 14)
+    plt.ylabel('Antibiotic Concentration', fontsize = 14)
     plt.title('Rayleigh Distribution', fontsize = 16)
     plt.legend(fontsize=12)
     plt.grid(False)

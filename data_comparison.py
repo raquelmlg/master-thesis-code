@@ -18,7 +18,7 @@ def selectVersion(version):
     model_4= pd.read_csv("dataframes/"+ str(version)+ "/model4.csv")
     return model_1, model_2, model_3, model_4
 
-model_1, model_2, model_3, model_4 = selectVersion("9")
+model_1, model_2, model_3, model_4 = selectVersion("1")
 
 
 # Calculate mean and standard deviation for each model
@@ -92,7 +92,7 @@ def perform_t_tests(models, column_names):
                 model1 = models[i]
                 model2 = models[j]
                 t_statistic, p_value = ttest_ind(model1[column_name], model2[column_name], equal_var=False)
-              #  print(f"Model {i + 1} vs Model {j + 1} - t-statistic:", t_statistic)
+                print(f"Model {i + 1} vs Model {j + 1} - t-statistic:", t_statistic)
                 print(f"Model {i + 1} vs Model {j + 1} - p-value:", p_value)
                 
 perform_t_tests([model_1,model_2,model_3,model_4], ['density','concentrations','running_time','number_colonies'])
