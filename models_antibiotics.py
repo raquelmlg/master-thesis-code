@@ -1,16 +1,25 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Mon Jun 26 13:32:17 2023
-
-@author: gilor
-"""
 import random
 import common_functions as cf
 import plot_functions as pf
 
+# Simulate the growth of bacterial colonies in a square domain with an application of antibiotics and no bacterial regrowth.
+#
+# Parameters:
+# R_0: Initial radius of bacterial colonies.
+# I: Carrying capacity, representing the limit for the colonies'radius.
+# r: Growth rate, determining how fast colonies grow.
+# hour_count: Total number of hours for the simulation.
+# model (string): selecting model_1, model_2, model_3, model_4
+# antibiotic_step: time step at which the antibiotics are added
+# A_0: Affects the maximum antibiotic effectiveness
+# A_1: Affects the duration of the antibiotic effectiveness
+# l: Length of the square domain (default is 5*I, to at least have enough space for the generation).
+# showPlots: Set to True to display plots, False when creating dataframes.
 
-def simulate_colonies(R_0, I, r, hour_count, model, antibiotic_step=10, l=None, showPlots=False):
-    # random.seed(1411)
+# seed = 1411 was used for the comparison of the models with and without antibiotics in the
+# Chapter: Modeling Antibiotic effects
+def simulate_colonies(R_0, I, r, hour_count, model, antibiotic_step=10,A_0=1.65, A_1=32, l=None, showPlots=False):
+    random.seed(1411)
     # Default value of length if not specified
     if l is None:
         l = 5*I
@@ -71,7 +80,7 @@ def simulate_colonies(R_0, I, r, hour_count, model, antibiotic_step=10, l=None, 
         # old colonies have schrunk
         for colony in colonies:
             colony['age'] = colony['age'] + 1
-            colony['radius'] = cf.calculate_new_radius_with_antibiotics(k,colony, A_0=1.65, A_1=32)
+            colony['radius'] = cf.calculate_new_radius_with_antibiotics(k,colony, A_0=A_0,A_1=A_1)
             if (colony['radius']<1):
                 colonies.remove(colony)
 
@@ -93,8 +102,5 @@ def simulate_colonies(R_0, I, r, hour_count, model, antibiotic_step=10, l=None, 
     return colonies, cf.calculate_bacterial_concentration(colonies), cf.calculate_percentage_covered(colonies, l), sum_of_radiuses
 
 
-# from datetime import datetime
-# time_1 = datetime.now()
-# area = simulate_colonies(R_0=1, I=20, r=0.4, hour_count=40, model='model_3', antibiotic_step=10, l=5 * 20, showPlots=True)
-# time_2 = datetime.now()
-# print(time_2-time_1)
+#Uncomment and adapt the parameters to generate the simulations
+#results = simulate_colonies(R_0=1, I=20, r=0.4, hour_count=40, model='model_3', antibiotic_step=10, l=5 * 20, showPlots=True)

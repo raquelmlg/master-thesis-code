@@ -95,7 +95,6 @@ def calculate_nutrient_availability(colonies, l, grid_size=0.2):
 def calculate_new_radius(R_0, I, r, t):
     return I * R_0 * np.exp(r * t) / (I + R_0 *(np.exp(r * t) - 1))
 
-# Radius increases slower due to Antibiotics
 # A_0 = controls the value of the maximum antibiotic effectiveness
 # A_1 = controls how quickly the antibiotic loses its effectiveness over time
 def rayleigh_distribution(t, A_0=1.65, A_1=32):
@@ -108,10 +107,30 @@ def calculate_new_radius_with_antibiotics(t, colony, theta=0.2, A_0=1.65, A_1=32
     m=rayleigh_distribution(math.sqrt(A_1/2), A_0,A_1)
     return colony['radius'] * (1 - theta * rayleigh_distribution(t,A_0, A_1) ** 2 / (rayleigh_distribution(t,A_0,A_1) ** 2 + m))
 
+# Calculation of the total linear size R(t)
 def sum_of_radiuses(colonies):
     return sum(colony['radius'] for colony in colonies)
 
-# This function could have been use in another version of the model where we skip the already covered points
+# Calculation of the Generalized Antibiotics vector, GA
+def sum_of_antibiotic_effects(A_0=1.65, A_1=32, antibiotic_steps=[10,30], hour_count=60):
+    # check that antibiotic_steps is not empty and all antibiotic applications are before than the maximum time
+    if (not len(antibiotic_steps)>0 or not all(antibiotic_step <=hour_count for antibiotic_step in antibiotic_steps)):
+        return
+
+    sum_of_rayleighs= [0]*(hour_count)
+    for i in range (len(antibiotic_steps)):
+        rayleigh_values = [0]*antibiotic_steps[i]
+        rayleigh_values.extend([rayleigh_distribution(t,A_0,A_1) for t in range(0, hour_count-antibiotic_steps[i])])
+        sum_of_rayleighs = np.add(sum_of_rayleighs, rayleigh_values)
+
+    return sum_of_rayleighs
+
+# Calculating new radius with multiple application of antibiotics
+def calculate_new_radius_with_antibiotics_generalized(colony, rayleigh_value, A_0, A_1, theta=0.2):
+    m = rayleigh_distribution(math.sqrt(A_1 / 2), A_0, A_1)
+    return colony['radius'] * (1 - theta * rayleigh_value ** 2 / (rayleigh_value ** 2 + m))
+
+# This function could have been used in another version of the model where we skip the already covered points
 # but for some reason is not faster
 def calculate_free_points(colonies, grid_size, free_points):
     covered_points = set()

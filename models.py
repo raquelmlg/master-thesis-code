@@ -1,14 +1,21 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Mon Jun 26 13:32:17 2023
-
-@author: gilor
-"""
 import random
 import common_functions as cf
 import plot_functions as pf
 
 
+# Simulate the growth of bacterial colonies in a square domain.
+#
+# Parameters:
+# R_0: Initial radius of bacterial colonies.
+# I: Carrying capacity, representing the limit for the colonies'radius.
+# r: Growth rate, determining how fast colonies grow.
+# hour_count: Total number of hours for the simulation.
+# model (string): selecting model_1, model_2, model_3, model_4
+# l: Length of the square domain (default is 5*I, to at least have enough space for the generation).
+# showPlots: Set to True to display plots, False when creating dataframes.
+
+# seed = 1411 was used for the comparison of the models with and without antibiotics in the
+# Chapter: Modeling Antibiotic effects
 def simulate_colonies(R_0, I, r, hour_count, model, l=None, showPlots=False):
     # random.seed(1411)
 
@@ -76,8 +83,6 @@ def simulate_colonies(R_0, I, r, hour_count, model, l=None, showPlots=False):
 
     return colonies, cf.calculate_bacterial_concentration(colonies), cf.calculate_percentage_covered(colonies, l)
 
-# from datetime import datetime
-# time_1 = datetime.now()
-# area = simulate_colonies(R_0=1, I=20, r=0.4, hour_count=40, model='model_3', l=5 * 20, showPlots=True)
-# time_2 = datetime.now()
-# print(time_2-time_1)
+# Uncomment and adapt the parameters to generate the simulations
+#result = simulate_colonies(R_0=1, I=20, r=0.4, hour_count=40, model='model_3', l=100, showPlots=True)
+
