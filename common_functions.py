@@ -81,14 +81,14 @@ def calculate_total_covered_area(colonies, l, grid_step=0.2):
 
 # Calculate the percentage of the grid that it´s covered by the bacteria
 # We use this measure for the density of the colonies
-def calculate_percentage_covered(colonies, l, grid_size=0.2):
+def calculate_bacterial_density(colonies, l, grid_size=0.2):
     area = calculate_total_covered_area(colonies, l, grid_size)
     return area / (l ** 2)
 
 # We consider that the nutrients are distributed homogeneously in the medium at the beginning
 # so a measure of nutrient availability could be the percentage of the domain which is not covered by colonies
 def calculate_nutrient_availability(colonies, l, grid_size=0.2):
-    return 1 - calculate_percentage_covered(colonies, l, grid_size)
+    return 1 - calculate_bacterial_density(colonies, l, grid_size)
 
 # Radius increases according to the Logistic Growth with Carrying Capacity I and Growth Rate r
 def calculate_new_radius(R_0, I, r, t):

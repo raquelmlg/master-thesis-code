@@ -39,7 +39,7 @@ def simulate_colonies(R_0, I, r, hour_count, model, l=None, showPlots=False):
 
     # calculate initial concentration / density
     if showPlots:
-        density = cf.calculate_percentage_covered(colonies, l)
+        density = cf.calculate_bacterial_density(colonies, l)
         densities.append(density)
         concentration = cf.calculate_bacterial_concentration(colonies)
         concentrations.append(concentration)
@@ -71,7 +71,7 @@ def simulate_colonies(R_0, I, r, hour_count, model, l=None, showPlots=False):
             pf.plot_colonies(colonies, l,k+1)
             concentration = cf.calculate_bacterial_concentration(colonies)
             concentrations.append(concentration)
-            density = cf.calculate_percentage_covered(colonies, l)
+            density = cf.calculate_bacterial_density(colonies, l)
             densities.append(density)
             sum_of_radiuses.append(cf.sum_of_radiuses(colonies))
             print(f"Step {k + 1}: Density = {density:.4f},  Concentration = {concentration:.4f}")
@@ -81,7 +81,7 @@ def simulate_colonies(R_0, I, r, hour_count, model, l=None, showPlots=False):
          pf.plot_array(densities, 'Density')
          pf.plot_array(sum_of_radiuses, "Total Linear Size")
 
-    return colonies, cf.calculate_bacterial_concentration(colonies), cf.calculate_percentage_covered(colonies, l)
+    return colonies, cf.calculate_bacterial_concentration(colonies), cf.calculate_bacterial_density(colonies, l)
 
 # Uncomment and adapt the parameters to generate the simulations
 #result = simulate_colonies(R_0=1, I=20, r=0.4, hour_count=40, model='model_3', l=100, showPlots=True)

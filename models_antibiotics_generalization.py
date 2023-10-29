@@ -49,7 +49,7 @@ def simulate_colonies(R_0, I, r, A_0,A_1, hour_count=50, antibiotic_steps=[10,30
 
     # calculate initial concentration / density
     if showPlots:
-        density = cf.calculate_percentage_covered(colonies, l)
+        density = cf.calculate_bacterial_density(colonies, l)
         densities.append(density)
         concentration = cf.calculate_bacterial_concentration(colonies)
         concentrations.append(concentration)
@@ -72,7 +72,7 @@ def simulate_colonies(R_0, I, r, A_0,A_1, hour_count=50, antibiotic_steps=[10,30
          pf.plot_array(concentrations, 'Concentration')
          pf.plot_array(densities, 'Density')
          pf.plot_array(sum_of_radiuses, "Total Linear Size")
-    return colonies, cf.calculate_bacterial_concentration(colonies), cf.calculate_percentage_covered(colonies, l), sum_of_radiuses
+    return colonies, cf.calculate_bacterial_concentration(colonies), cf.calculate_bacterial_density(colonies, l), sum_of_radiuses
 
 
 def steps_without_antibiotics(colonies,concentrations, densities,sum_of_radiuses, R_0, I, r,l,k, showPlots):
@@ -92,7 +92,7 @@ def steps_without_antibiotics(colonies,concentrations, densities,sum_of_radiuses
         pf.plot_colonies(colonies, l, k + 1)
         concentration = cf.calculate_bacterial_concentration(colonies)
         concentrations.append(concentration)
-        density = cf.calculate_percentage_covered(colonies, l)
+        density = cf.calculate_bacterial_density(colonies, l)
         densities.append(density)
         sum_of_radiuses.append(cf.sum_of_radiuses(colonies))
         print(f"Step without antibiotics{k + 1}: Density = {density:.4f},  Concentration = {concentration:.4f}")
@@ -110,7 +110,7 @@ def steps_with_antibiotics(colonies,concentrations, densities,sum_of_radiuses, l
         pf.plot_colonies(colonies, l, k)
         concentration = cf.calculate_bacterial_concentration(colonies)
         concentrations.append(concentration)
-        density = cf.calculate_percentage_covered(colonies, l)
+        density = cf.calculate_bacterial_density(colonies, l)
         densities.append(density)
         sum_of_radiuses.append(cf.sum_of_radiuses(colonies))
         print(f"Step with antibiotics {k + 1}: Density = {density:.4f},  Concentration = {concentration:.4f}")
