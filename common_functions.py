@@ -60,7 +60,7 @@ def generate_colony(l, R_0, I, old_colonies=[], checkSpaceAvailable=False):
     else:
         return create_new_colony(I, l, R_0)
 
-# Calculate the bacterial concentration in our domain (sum of all colonies)
+# Calculate the bacterial concentration in our domain (sum of all colonies' areas)
 # In this case, we assume that the bacteria can be overlapping, i.e. we count twice whenever two colonies overlap
 def calculate_bacterial_concentration(colonies):
     return sum(calculate_area(colony) for colony in colonies)
@@ -80,8 +80,7 @@ def calculate_total_covered_area(colonies, l, grid_step=0.2):
     return area
 
 # Calculate the percentage of the grid that it´s covered by the bacteria
-# This can also be a measure for the density of the colonies
-# In this case, we assume that bacterial colonies don´t overlap
+# We use this measure for the density of the colonies
 def calculate_percentage_covered(colonies, l, grid_size=0.2):
     area = calculate_total_covered_area(colonies, l, grid_size)
     return area / (l ** 2)
